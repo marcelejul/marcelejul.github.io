@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CalcPro - Calculadora Online</title>
+<meta name="description" content="CalcPro - calculadoras gratuitas, rápidas e completas.">
+<title>CalcPro — Calculadora Completa</title>
 
 <style>
 * {
@@ -13,141 +14,206 @@
 }
 
 body {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
     font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #0f172a, #312e81);
+    background: #080b12;
     color: white;
+    min-height: 100vh;
 }
 
-.calculator {
-    width: 100%;
-    max-width: 380px;
+header {
     padding: 20px;
-    background: #111827;
-    border: 1px solid #374151;
-    border-radius: 24px;
-    box-shadow: 0 20px 50px rgba(0,0,0,.4);
+    text-align: center;
+    background: linear-gradient(135deg, #111827, #172554);
+    border-bottom: 1px solid #263247;
 }
 
 .logo {
-    text-align: center;
-    margin-bottom: 15px;
-    font-size: 20px;
-    font-weight: bold;
+    font-size: 30px;
+    font-weight: 900;
 }
 
 .logo span {
-    color: #818cf8;
+    color: #4f8cff;
 }
 
-.display {
-    width: 100%;
-    min-height: 110px;
-    padding: 20px;
-    margin-bottom: 15px;
+header p {
+    margin-top: 6px;
+    color: #aeb9cc;
+}
+
+.container {
+    width: min(1100px, 94%);
+    margin: 25px auto;
+}
+
+.tabs {
     display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: flex-end;
-    background: #020617;
-    border-radius: 16px;
-    overflow: hidden;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 12px;
 }
 
-.previous {
-    min-height: 24px;
-    color: #94a3b8;
+.tabs button {
+    white-space: nowrap;
+    border: 0;
+    padding: 12px 16px;
+    border-radius: 12px;
+    background: #151b28;
+    color: white;
+    cursor: pointer;
+}
+
+.tabs button.active,
+.tabs button:hover {
+    background: #3478ff;
+}
+
+.section {
+    display: none;
+}
+
+.section.active {
+    display: block;
+}
+
+.card {
+    background: #111722;
+    border: 1px solid #242e40;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.18);
+}
+
+.card h2 {
+    margin-bottom: 15px;
+}
+
+input, select {
+    width: 100%;
+    padding: 14px;
+    margin: 7px 0 12px;
+    border-radius: 12px;
+    border: 1px solid #303b50;
+    background: #0b1019;
+    color: white;
     font-size: 16px;
 }
 
-.current {
+button.primary {
     width: 100%;
-    text-align: right;
-    font-size: 42px;
+    padding: 14px;
+    border: 0;
+    border-radius: 12px;
+    background: #3478ff;
+    color: white;
+    font-size: 16px;
     font-weight: bold;
-    overflow-wrap: anywhere;
+    cursor: pointer;
+}
+
+button.primary:hover {
+    background: #2563eb;
+}
+
+.result {
+    margin-top: 15px;
+    padding: 15px;
+    border-radius: 12px;
+    background: #0b1019;
+    border: 1px solid #263247;
+    color: #dbe7ff;
+}
+
+.calculator {
+    max-width: 430px;
+    margin: auto;
+}
+
+.display {
+    background: #05070b;
+    border: 1px solid #263247;
+    border-radius: 16px;
+    min-height: 110px;
+    padding: 18px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: end;
+    justify-content: end;
+    font-size: 34px;
+    overflow-x: auto;
 }
 
 .buttons {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
+    gap: 9px;
 }
 
-button {
-    min-height: 62px;
+.buttons button {
+    height: 65px;
     border: 0;
-    border-radius: 14px;
-    font-size: 20px;
-    font-weight: bold;
+    border-radius: 15px;
+    background: #1a2230;
     color: white;
-    background: #1e293b;
+    font-size: 20px;
     cursor: pointer;
-    transition: transform .1s, filter .1s;
 }
 
-button:active {
-    transform: scale(.94);
+.buttons button:hover {
+    background: #273348;
 }
 
-button:hover {
-    filter: brightness(1.15);
+.buttons .operator {
+    background: #245dcc;
 }
 
-.operator {
-    background: #4f46e5;
+.buttons .danger {
+    background: #9f2736;
 }
 
-.action {
-    background: #334155;
-}
-
-.equals {
-    background: #7c3aed;
-}
-
-.zero {
-    grid-column: span 2;
-}
-
-.history {
-    margin-top: 20px;
-    padding-top: 15px;
-    border-top: 1px solid #334155;
-}
-
-.history-title {
-    color: #94a3b8;
-    font-size: 14px;
-    margin-bottom: 8px;
-}
-
-.history-list {
-    max-height: 100px;
-    overflow-y: auto;
+.buttons .equal {
+    background: #16a05d;
 }
 
 .history-item {
-    padding: 6px 0;
-    color: #cbd5e1;
-    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 13px;
+    margin-bottom: 8px;
+    border-radius: 10px;
+    background: #0b1019;
 }
 
-@media (max-width: 380px) {
-    .calculator {
-        padding: 15px;
+.history-item span:last-child {
+    color: #61a0ff;
+    font-weight: bold;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+footer {
+    text-align: center;
+    padding: 30px;
+    color: #78859a;
+}
+
+@media (max-width: 600px) {
+    .grid {
+        grid-template-columns: 1fr;
     }
 
-    button {
-        min-height: 56px;
+    .display {
+        font-size: 28px;
     }
 
-    .current {
-        font-size: 34px;
+    .buttons button {
+        height: 58px;
     }
 }
 </style>
@@ -155,294 +221,514 @@ button:hover {
 
 <body>
 
-<div class="calculator">
+<header>
+    <div class="logo">Calc<span>Pro</span></div>
+    <p>Calculadoras rápidas, completas e gratuitas</p>
+</header>
 
-    <div class="logo">
-        Calc<span>Pro</span>
-    </div>
+<div class="container">
 
-    <div class="display">
-        <div class="previous" id="previous"></div>
-        <div class="current" id="current">0</div>
-    </div>
+<div class="tabs">
+    <button class="active" onclick="showSection('calculadora', this)">🧮 Calculadora</button>
+    <button onclick="showSection('porcentagem', this)">%</button>
+    <button onclick="showSection('juros', this)">💰 Juros</button>
+    <button onclick="showSection('regra', this)">📊 Regra de 3</button>
+    <button onclick="showSection('imc', this)">⚖️ IMC</button>
+    <button onclick="showSection('conversor', this)">📏 Conversor</button>
+    <button onclick="showSection('idade', this)">🎂 Idade</button>
+    <button onclick="showSection('desconto', this)">🛍️ Desconto</button>
+    <button onclick="showSection('historico', this)">🕘 Histórico</button>
+</div>
+
+<!-- CALCULADORA -->
+
+<section id="calculadora" class="section active">
+<div class="card calculator">
+
+    <div id="display" class="display">0</div>
 
     <div class="buttons">
+        <button class="danger" onclick="clearCalc()">AC</button>
+        <button onclick="backspace()">⌫</button>
+        <button onclick="percent()">%</button>
+        <button class="operator" onclick="add('/')">÷</button>
 
-        <button class="action" data-action="clear">AC</button>
-        <button class="action" data-action="delete">⌫</button>
-        <button class="action" data-action="percent">%</button>
-        <button class="operator" data-operator="÷">÷</button>
+        <button onclick="add('7')">7</button>
+        <button onclick="add('8')">8</button>
+        <button onclick="add('9')">9</button>
+        <button class="operator" onclick="add('*')">×</button>
 
-        <button data-number="7">7</button>
-        <button data-number="8">8</button>
-        <button data-number="9">9</button>
-        <button class="operator" data-operator="×">×</button>
+        <button onclick="add('4')">4</button>
+        <button onclick="add('5')">5</button>
+        <button onclick="add('6')">6</button>
+        <button class="operator" onclick="add('-')">−</button>
 
-        <button data-number="4">4</button>
-        <button data-number="5">5</button>
-        <button data-number="6">6</button>
-        <button class="operator" data-operator="-">−</button>
+        <button onclick="add('1')">1</button>
+        <button onclick="add('2')">2</button>
+        <button onclick="add('3')">3</button>
+        <button class="operator" onclick="add('+')">+</button>
 
-        <button data-number="1">1</button>
-        <button data-number="2">2</button>
-        <button data-number="3">3</button>
-        <button class="operator" data-operator="+">+</button>
+        <button onclick="add('Math.PI')">π</button>
+        <button onclick="add('0')">0</button>
+        <button onclick="add('.')">.</button>
+        <button class="equal" onclick="calculate()">=</button>
 
-        <button class="zero" data-number="0">0</button>
-        <button data-number=".">.</button>
-        <button class="equals" data-action="equals">=</button>
-
-    </div>
-
-    <div class="history">
-        <div class="history-title">Histórico</div>
-        <div class="history-list" id="historyList">
-            Nenhum cálculo ainda.
-        </div>
+        <button onclick="sqrt()">√</button>
+        <button onclick="square()">x²</button>
+        <button onclick="add('(')">(</button>
+        <button onclick="add(')')">)</button>
     </div>
 
 </div>
+</section>
+
+<!-- PORCENTAGEM -->
+
+<section id="porcentagem" class="section">
+<div class="card">
+<h2>Calculadora de Porcentagem</h2>
+
+<label>Valor</label>
+<input id="pValor" type="number" placeholder="Ex: 200">
+
+<label>Porcentagem</label>
+<input id="pPorcentagem" type="number" placeholder="Ex: 15">
+
+<button class="primary" onclick="porcentagem()">Calcular</button>
+
+<div id="pResultado" class="result"></div>
+</div>
+</section>
+
+<!-- JUROS -->
+
+<section id="juros" class="section">
+<div class="card">
+<h2>Juros Simples</h2>
+
+<input id="jCapital" type="number" placeholder="Capital inicial">
+<input id="jTaxa" type="number" placeholder="Taxa (%)">
+<input id="jTempo" type="number" placeholder="Tempo">
+
+<select id="jPeriodo">
+<option value="mes">Meses</option>
+<option value="ano">Anos</option>
+</select>
+
+<button class="primary" onclick="juros()">Calcular juros</button>
+
+<div id="jResultado" class="result"></div>
+</div>
+</section>
+
+<!-- REGRA DE 3 -->
+
+<section id="regra" class="section">
+<div class="card">
+<h2>Regra de Três</h2>
+
+<p>Se A está para B, C está para X:</p>
+
+<input id="rA" type="number" placeholder="A">
+<input id="rB" type="number" placeholder="B">
+<input id="rC" type="number" placeholder="C">
+
+<button class="primary" onclick="regraTres()">Calcular X</button>
+
+<div id="rResultado" class="result"></div>
+</div>
+</section>
+
+<!-- IMC -->
+
+<section id="imc" class="section">
+<div class="card">
+<h2>Calculadora de IMC</h2>
+
+<input id="imcPeso" type="number" step="0.1" placeholder="Peso em kg">
+<input id="imcAltura" type="number" step="0.01" placeholder="Altura em metros">
+
+<button class="primary" onclick="imc()">Calcular</button>
+
+<div id="imcResultado" class="result"></div>
+</div>
+</section>
+
+<!-- CONVERSOR -->
+
+<section id="conversor" class="section">
+<div class="card">
+<h2>Conversor de Unidades</h2>
+
+<input id="convValor" type="number" placeholder="Valor">
+
+<select id="convTipo">
+<option value="km-m">Quilômetros → Metros</option>
+<option value="m-km">Metros → Quilômetros</option>
+<option value="kg-g">Quilos → Gramas</option>
+<option value="g-kg">Gramas → Quilos</option>
+<option value="c-f">Celsius → Fahrenheit</option>
+<option value="f-c">Fahrenheit → Celsius</option>
+<option value="l-ml">Litros → Mililitros</option>
+<option value="ml-l">Mililitros → Litros</option>
+<option value="h-min">Horas → Minutos</option>
+<option value="min-h">Minutos → Horas</option>
+</select>
+
+<button class="primary" onclick="converter()">Converter</button>
+
+<div id="convResultado" class="result"></div>
+</div>
+</section>
+
+<!-- IDADE -->
+
+<section id="idade" class="section">
+<div class="card">
+<h2>Calculadora de Idade</h2>
+
+<input id="nascimento" type="date">
+
+<button class="primary" onclick="idade()">Calcular idade</button>
+
+<div id="idadeResultado" class="result"></div>
+</div>
+</section>
+
+<!-- DESCONTO -->
+
+<section id="desconto" class="section">
+<div class="card">
+<h2>Calculadora de Desconto</h2>
+
+<input id="dPreco" type="number" placeholder="Preço original">
+<input id="dDesconto" type="number" placeholder="Desconto (%)">
+
+<button class="primary" onclick="desconto()">Calcular</button>
+
+<div id="dResultado" class="result"></div>
+</div>
+</section>
+
+<!-- HISTÓRICO -->
+
+<section id="historico" class="section">
+<div class="card">
+<h2>Histórico de Cálculos</h2>
+
+<button class="primary" onclick="limparHistorico()">
+🗑️ Apagar tudo
+</button>
+
+<br><br>
+
+<div id="history"></div>
+</div>
+</section>
+
+</div>
+
+<footer>
+    © 2026 CalcPro — Calculadoras gratuitas
+</footer>
 
 <script>
-const currentDisplay = document.getElementById("current");
-const previousDisplay = document.getElementById("previous");
-const historyList = document.getElementById("historyList");
 
-let current = "0";
-let previous = "";
-let operator = null;
-let shouldReset = false;
+let expression = "";
 
-function updateDisplay() {
-    currentDisplay.textContent = current;
-    previousDisplay.textContent =
-        operator ? previous + " " + operator : "";
+const display = document.getElementById("display");
+
+function add(value) {
+    if (expression === "0") expression = "";
+    expression += value;
+    display.textContent = expression;
 }
 
-function addNumber(number) {
-
-    if (shouldReset) {
-        current = "0";
-        shouldReset = false;
-    }
-
-    if (number === "." && current.includes(".")) {
-        return;
-    }
-
-    if (current === "0" && number !== ".") {
-        current = number;
-    } else {
-        current += number;
-    }
-
-    updateDisplay();
+function clearCalc() {
+    expression = "";
+    display.textContent = "0";
 }
 
-function chooseOperator(selectedOperator) {
-
-    if (operator !== null) {
-        calculate();
-    }
-
-    previous = current;
-    operator = selectedOperator;
-    shouldReset = true;
-
-    updateDisplay();
+function backspace() {
+    expression = expression.slice(0, -1);
+    display.textContent = expression || "0";
 }
 
 function calculate() {
+    try {
+        let result = Function('"use strict"; return (' + expression + ')')();
 
-    if (operator === null || shouldReset) {
+        if (!Number.isFinite(result)) {
+            throw new Error();
+        }
+
+        addHistory(expression, result);
+
+        expression = String(result);
+        display.textContent = result;
+
+    } catch {
+        display.textContent = "Erro";
+        expression = "";
+    }
+}
+
+function percent() {
+    try {
+        expression = String(Function('"use strict"; return (' + expression + ')')() / 100);
+        display.textContent = expression;
+    } catch {
+        display.textContent = "Erro";
+    }
+}
+
+function sqrt() {
+    try {
+        let value = Function('"use strict"; return (' + expression + ')')();
+
+        if (value < 0) throw new Error();
+
+        let result = Math.sqrt(value);
+
+        addHistory("√" + value, result);
+
+        expression = String(result);
+        display.textContent = result;
+    } catch {
+        display.textContent = "Erro";
+    }
+}
+
+function square() {
+    try {
+        let value = Function('"use strict"; return (' + expression + ')')();
+        let result = value ** 2;
+
+        addHistory(value + "²", result);
+
+        expression = String(result);
+        display.textContent = result;
+    } catch {
+        display.textContent = "Erro";
+    }
+}
+
+function showSection(id, button) {
+    document.querySelectorAll(".section").forEach(section => {
+        section.classList.remove("active");
+    });
+
+    document.getElementById(id).classList.add("active");
+
+    document.querySelectorAll(".tabs button").forEach(btn => {
+        btn.classList.remove("active");
+    });
+
+    button.classList.add("active");
+}
+
+function porcentagem() {
+    const valor = Number(document.getElementById("pValor").value);
+    const porcentagem = Number(document.getElementById("pPorcentagem").value);
+
+    if (!valor || !porcentagem) {
+        document.getElementById("pResultado").textContent = "Preencha os campos.";
         return;
     }
 
-    const a = Number(previous);
-    const b = Number(current);
+    const resultado = valor * porcentagem / 100;
 
-    let result;
-
-    if (operator === "+") {
-        result = a + b;
-    }
-
-    if (operator === "-") {
-        result = a - b;
-    }
-
-    if (operator === "×") {
-        result = a * b;
-    }
-
-    if (operator === "÷") {
-
-        if (b === 0) {
-            current = "Erro";
-            previous = "";
-            operator = null;
-            shouldReset = true;
-            updateDisplay();
-            return;
-        }
-
-        result = a / b;
-    }
-
-    result = Number(result.toFixed(10));
-
-    addHistory(
-        previous + " " + operator + " " + current +
-        " = " + result
-    );
-
-    current = String(result);
-    previous = "";
-    operator = null;
-    shouldReset = true;
-
-    updateDisplay();
+    document.getElementById("pResultado").innerHTML =
+        `${porcentagem}% de ${valor} = <strong>${resultado}</strong>`;
 }
 
-function clearCalculator() {
+function juros() {
+    const capital = Number(document.getElementById("jCapital").value);
+    const taxa = Number(document.getElementById("jTaxa").value);
+    const tempo = Number(document.getElementById("jTempo").value);
 
-    current = "0";
-    previous = "";
-    operator = null;
-    shouldReset = false;
-
-    updateDisplay();
-}
-
-function deleteNumber() {
-
-    if (shouldReset || current === "Erro") {
-        current = "0";
-        shouldReset = false;
-    } else {
-
-        current = current.length > 1
-            ? current.slice(0, -1)
-            : "0";
+    if (!capital || !taxa || !tempo) {
+        document.getElementById("jResultado").textContent = "Preencha os campos.";
+        return;
     }
 
-    updateDisplay();
+    const juros = capital * (taxa / 100) * tempo;
+    const montante = capital + juros;
+
+    document.getElementById("jResultado").innerHTML =
+        `Juros: <strong>${juros.toFixed(2)}</strong><br>
+         Montante: <strong>${montante.toFixed(2)}</strong>`;
 }
 
-function percentage() {
+function regraTres() {
+    const a = Number(document.getElementById("rA").value);
+    const b = Number(document.getElementById("rB").value);
+    const c = Number(document.getElementById("rC").value);
 
-    const value = Number(current);
-
-    if (!Number.isFinite(value)) {
-        current = "0";
-    } else {
-        current = String(value / 100);
+    if (!a || !b || !c) {
+        document.getElementById("rResultado").textContent = "Preencha os campos.";
+        return;
     }
 
-    updateDisplay();
+    const x = (b * c) / a;
+
+    document.getElementById("rResultado").innerHTML =
+        `Resultado: <strong>${x}</strong>`;
 }
 
-function addHistory(text) {
+function imc() {
+    const peso = Number(document.getElementById("imcPeso").value);
+    const altura = Number(document.getElementById("imcAltura").value);
+
+    if (!peso || !altura) {
+        document.getElementById("imcResultado").textContent = "Preencha os campos.";
+        return;
+    }
+
+    const resultado = peso / (altura * altura);
+
+    document.getElementById("imcResultado").innerHTML =
+        `IMC calculado: <strong>${resultado.toFixed(2)}</strong><br>
+        Este número é apenas um indicador e não substitui uma avaliação profissional.`;
+}
+
+function converter() {
+    const valor = Number(document.getElementById("convValor").value);
+    const tipo = document.getElementById("convTipo").value;
+
+    if (isNaN(valor)) {
+        document.getElementById("convResultado").textContent = "Digite um valor.";
+        return;
+    }
+
+    let resultado;
+
+    switch (tipo) {
+        case "km-m": resultado = valor * 1000; break;
+        case "m-km": resultado = valor / 1000; break;
+        case "kg-g": resultado = valor * 1000; break;
+        case "g-kg": resultado = valor / 1000; break;
+        case "c-f": resultado = (valor * 9/5) + 32; break;
+        case "f-c": resultado = (valor - 32) * 5/9; break;
+        case "l-ml": resultado = valor * 1000; break;
+        case "ml-l": resultado = valor / 1000; break;
+        case "h-min": resultado = valor * 60; break;
+        case "min-h": resultado = valor / 60; break;
+    }
+
+    document.getElementById("convResultado").innerHTML =
+        `Resultado: <strong>${resultado}</strong>`;
+}
+
+function idade() {
+    const nascimento = document.getElementById("nascimento").value;
+
+    if (!nascimento) {
+        document.getElementById("idadeResultado").textContent =
+            "Escolha sua data de nascimento.";
+        return;
+    }
+
+    const dataNascimento = new Date(nascimento + "T00:00:00");
+    const hoje = new Date();
+
+    let anos = hoje.getFullYear() - dataNascimento.getFullYear();
+    let meses = hoje.getMonth() - dataNascimento.getMonth();
 
     if (
-        historyList.textContent ===
-        "Nenhum cálculo ainda."
+        meses < 0 ||
+        (meses === 0 && hoje.getDate() < dataNascimento.getDate())
     ) {
-        historyList.innerHTML = "";
+        anos--;
     }
 
-    const item = document.createElement("div");
-
-    item.className = "history-item";
-    item.textContent = text;
-
-    historyList.prepend(item);
+    document.getElementById("idadeResultado").innerHTML =
+        `Idade aproximada: <strong>${anos} anos</strong>`;
 }
 
-document.querySelectorAll("[data-number]").forEach(button => {
+function desconto() {
+    const preco = Number(document.getElementById("dPreco").value);
+    const porcentagem = Number(document.getElementById("dDesconto").value);
 
-    button.addEventListener("click", () => {
-        addNumber(button.dataset.number);
+    if (!preco || !porcentagem) {
+        document.getElementById("dResultado").textContent =
+            "Preencha os campos.";
+        return;
+    }
+
+    const economia = preco * porcentagem / 100;
+    const final = preco - economia;
+
+    document.getElementById("dResultado").innerHTML =
+        `Economia: <strong>R$ ${economia.toFixed(2)}</strong><br>
+         Preço final: <strong>R$ ${final.toFixed(2)}</strong>`;
+}
+
+function addHistory(expression, result) {
+    let history = JSON.parse(localStorage.getItem("calcHistory") || "[]");
+
+    history.unshift({
+        expression: expression,
+        result: result,
+        date: new Date().toLocaleString("pt-BR")
     });
 
-});
+    history = history.slice(0, 50);
 
-document.querySelectorAll("[data-operator]").forEach(button => {
+    localStorage.setItem("calcHistory", JSON.stringify(history));
 
-    button.addEventListener("click", () => {
-        chooseOperator(button.dataset.operator);
-    });
+    renderHistory();
+}
 
-});
+function renderHistory() {
+    const container = document.getElementById("history");
+    const history = JSON.parse(localStorage.getItem("calcHistory") || "[]");
 
-document.querySelector('[data-action="equals"]')
-    .addEventListener("click", calculate);
+    if (history.length === 0) {
+        container.innerHTML = "<p>Nenhum cálculo no histórico.</p>";
+        return;
+    }
 
-document.querySelector('[data-action="clear"]')
-    .addEventListener("click", clearCalculator);
+    container.innerHTML = history.map(item => `
+        <div class="history-item">
+            <span>
+                ${item.expression}<br>
+                <small>${item.date}</small>
+            </span>
+            <span>${item.result}</span>
+        </div>
+    `).join("");
+}
 
-document.querySelector('[data-action="delete"]')
-    .addEventListener("click", deleteNumber);
+function limparHistorico() {
+    localStorage.removeItem("calcHistory");
+    renderHistory();
+}
 
-document.querySelector('[data-action="percent"]')
-    .addEventListener("click", percentage);
+renderHistory();
 
-
-/* TECLADO DO CELULAR/COMPUTADOR */
-
-document.addEventListener("keydown", event => {
+document.addEventListener("keydown", function(event) {
 
     if (
-        event.key >= "0" &&
-        event.key <= "9"
+        /[0-9+\-*/().]/.test(event.key)
     ) {
-        addNumber(event.key);
+        add(event.key);
     }
 
-    if (event.key === ".") {
-        addNumber(".");
-    }
-
-    if (event.key === "+") {
-        chooseOperator("+");
-    }
-
-    if (event.key === "-") {
-        chooseOperator("-");
-    }
-
-    if (event.key === "*") {
-        chooseOperator("×");
-    }
-
-    if (event.key === "/") {
-        event.preventDefault();
-        chooseOperator("÷");
-    }
-
-    if (
-        event.key === "Enter" ||
-        event.key === "="
-    ) {
+    if (event.key === "Enter") {
         calculate();
     }
 
     if (event.key === "Backspace") {
-        deleteNumber();
+        backspace();
     }
 
     if (event.key === "Escape") {
-        clearCalculator();
+        clearCalc();
     }
-
-    if (event.key === "%") {
-        percentage();
-    }
-
 });
 
-updateDisplay();
 </script>
 
 </body>
-</html>
+    </html>
