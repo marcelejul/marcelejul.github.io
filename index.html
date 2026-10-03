@@ -1,74 +1,448 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Primeiro Site</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CalcPro - Calculadora Online</title>
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #111827, #4f46e5);
-            color: white;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #0f172a, #312e81);
+    color: white;
+}
 
-        .container {
-            padding: 30px;
-            max-width: 600px;
-        }
+.calculator {
+    width: 100%;
+    max-width: 380px;
+    padding: 20px;
+    background: #111827;
+    border: 1px solid #374151;
+    border-radius: 24px;
+    box-shadow: 0 20px 50px rgba(0,0,0,.4);
+}
 
-        h1 {
-            font-size: 42px;
-            margin-bottom: 15px;
-        }
+.logo {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 20px;
+    font-weight: bold;
+}
 
-        p {
-            font-size: 18px;
-            margin-bottom: 25px;
-            color: #e5e7eb;
-        }
+.logo span {
+    color: #818cf8;
+}
 
-        .botao {
-            display: inline-block;
-            padding: 14px 25px;
-            background: white;
-            color: #4f46e5;
-            text-decoration: none;
-            border-radius: 10px;
-            font-weight: bold;
-        }
+.display {
+    width: 100%;
+    min-height: 110px;
+    padding: 20px;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    background: #020617;
+    border-radius: 16px;
+    overflow: hidden;
+}
 
-        .botao:hover {
-            transform: scale(1.05);
-        }
-    </style>
+.previous {
+    min-height: 24px;
+    color: #94a3b8;
+    font-size: 16px;
+}
+
+.current {
+    width: 100%;
+    text-align: right;
+    font-size: 42px;
+    font-weight: bold;
+    overflow-wrap: anywhere;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+button {
+    min-height: 62px;
+    border: 0;
+    border-radius: 14px;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    background: #1e293b;
+    cursor: pointer;
+    transition: transform .1s, filter .1s;
+}
+
+button:active {
+    transform: scale(.94);
+}
+
+button:hover {
+    filter: brightness(1.15);
+}
+
+.operator {
+    background: #4f46e5;
+}
+
+.action {
+    background: #334155;
+}
+
+.equals {
+    background: #7c3aed;
+}
+
+.zero {
+    grid-column: span 2;
+}
+
+.history {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #334155;
+}
+
+.history-title {
+    color: #94a3b8;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.history-list {
+    max-height: 100px;
+    overflow-y: auto;
+}
+
+.history-item {
+    padding: 6px 0;
+    color: #cbd5e1;
+    font-size: 14px;
+}
+
+@media (max-width: 380px) {
+    .calculator {
+        padding: 15px;
+    }
+
+    button {
+        min-height: 56px;
+    }
+
+    .current {
+        font-size: 34px;
+    }
+}
+</style>
 </head>
 
 <body>
 
-    <div class="container">
-        <h1>Olá! 👋</h1>
+<div class="calculator">
 
-        <p>
-            Esse é o meu primeiro site criado pelo celular,
-            usando HTML e GitHub!
-        </p>
-
-        <a class="botao" href="#">
-            Meu primeiro botão
-        </a>
+    <div class="logo">
+        Calc<span>Pro</span>
     </div>
+
+    <div class="display">
+        <div class="previous" id="previous"></div>
+        <div class="current" id="current">0</div>
+    </div>
+
+    <div class="buttons">
+
+        <button class="action" data-action="clear">AC</button>
+        <button class="action" data-action="delete">⌫</button>
+        <button class="action" data-action="percent">%</button>
+        <button class="operator" data-operator="÷">÷</button>
+
+        <button data-number="7">7</button>
+        <button data-number="8">8</button>
+        <button data-number="9">9</button>
+        <button class="operator" data-operator="×">×</button>
+
+        <button data-number="4">4</button>
+        <button data-number="5">5</button>
+        <button data-number="6">6</button>
+        <button class="operator" data-operator="-">−</button>
+
+        <button data-number="1">1</button>
+        <button data-number="2">2</button>
+        <button data-number="3">3</button>
+        <button class="operator" data-operator="+">+</button>
+
+        <button class="zero" data-number="0">0</button>
+        <button data-number=".">.</button>
+        <button class="equals" data-action="equals">=</button>
+
+    </div>
+
+    <div class="history">
+        <div class="history-title">Histórico</div>
+        <div class="history-list" id="historyList">
+            Nenhum cálculo ainda.
+        </div>
+    </div>
+
+</div>
+
+<script>
+const currentDisplay = document.getElementById("current");
+const previousDisplay = document.getElementById("previous");
+const historyList = document.getElementById("historyList");
+
+let current = "0";
+let previous = "";
+let operator = null;
+let shouldReset = false;
+
+function updateDisplay() {
+    currentDisplay.textContent = current;
+    previousDisplay.textContent =
+        operator ? previous + " " + operator : "";
+}
+
+function addNumber(number) {
+
+    if (shouldReset) {
+        current = "0";
+        shouldReset = false;
+    }
+
+    if (number === "." && current.includes(".")) {
+        return;
+    }
+
+    if (current === "0" && number !== ".") {
+        current = number;
+    } else {
+        current += number;
+    }
+
+    updateDisplay();
+}
+
+function chooseOperator(selectedOperator) {
+
+    if (operator !== null) {
+        calculate();
+    }
+
+    previous = current;
+    operator = selectedOperator;
+    shouldReset = true;
+
+    updateDisplay();
+}
+
+function calculate() {
+
+    if (operator === null || shouldReset) {
+        return;
+    }
+
+    const a = Number(previous);
+    const b = Number(current);
+
+    let result;
+
+    if (operator === "+") {
+        result = a + b;
+    }
+
+    if (operator === "-") {
+        result = a - b;
+    }
+
+    if (operator === "×") {
+        result = a * b;
+    }
+
+    if (operator === "÷") {
+
+        if (b === 0) {
+            current = "Erro";
+            previous = "";
+            operator = null;
+            shouldReset = true;
+            updateDisplay();
+            return;
+        }
+
+        result = a / b;
+    }
+
+    result = Number(result.toFixed(10));
+
+    addHistory(
+        previous + " " + operator + " " + current +
+        " = " + result
+    );
+
+    current = String(result);
+    previous = "";
+    operator = null;
+    shouldReset = true;
+
+    updateDisplay();
+}
+
+function clearCalculator() {
+
+    current = "0";
+    previous = "";
+    operator = null;
+    shouldReset = false;
+
+    updateDisplay();
+}
+
+function deleteNumber() {
+
+    if (shouldReset || current === "Erro") {
+        current = "0";
+        shouldReset = false;
+    } else {
+
+        current = current.length > 1
+            ? current.slice(0, -1)
+            : "0";
+    }
+
+    updateDisplay();
+}
+
+function percentage() {
+
+    const value = Number(current);
+
+    if (!Number.isFinite(value)) {
+        current = "0";
+    } else {
+        current = String(value / 100);
+    }
+
+    updateDisplay();
+}
+
+function addHistory(text) {
+
+    if (
+        historyList.textContent ===
+        "Nenhum cálculo ainda."
+    ) {
+        historyList.innerHTML = "";
+    }
+
+    const item = document.createElement("div");
+
+    item.className = "history-item";
+    item.textContent = text;
+
+    historyList.prepend(item);
+}
+
+document.querySelectorAll("[data-number]").forEach(button => {
+
+    button.addEventListener("click", () => {
+        addNumber(button.dataset.number);
+    });
+
+});
+
+document.querySelectorAll("[data-operator]").forEach(button => {
+
+    button.addEventListener("click", () => {
+        chooseOperator(button.dataset.operator);
+    });
+
+});
+
+document.querySelector('[data-action="equals"]')
+    .addEventListener("click", calculate);
+
+document.querySelector('[data-action="clear"]')
+    .addEventListener("click", clearCalculator);
+
+document.querySelector('[data-action="delete"]')
+    .addEventListener("click", deleteNumber);
+
+document.querySelector('[data-action="percent"]')
+    .addEventListener("click", percentage);
+
+
+/* TECLADO DO CELULAR/COMPUTADOR */
+
+document.addEventListener("keydown", event => {
+
+    if (
+        event.key >= "0" &&
+        event.key <= "9"
+    ) {
+        addNumber(event.key);
+    }
+
+    if (event.key === ".") {
+        addNumber(".");
+    }
+
+    if (event.key === "+") {
+        chooseOperator("+");
+    }
+
+    if (event.key === "-") {
+        chooseOperator("-");
+    }
+
+    if (event.key === "*") {
+        chooseOperator("×");
+    }
+
+    if (event.key === "/") {
+        event.preventDefault();
+        chooseOperator("÷");
+    }
+
+    if (
+        event.key === "Enter" ||
+        event.key === "="
+    ) {
+        calculate();
+    }
+
+    if (event.key === "Backspace") {
+        deleteNumber();
+    }
+
+    if (event.key === "Escape") {
+        clearCalculator();
+    }
+
+    if (event.key === "%") {
+        percentage();
+    }
+
+});
+
+updateDisplay();
+</script>
 
 </body>
 </html>
